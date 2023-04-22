@@ -1,0 +1,85 @@
+format = """
+[░▒▓](white)\
+$os\
+$username\
+[](bg:blue fg:c12)\
+$directory\
+[](fg:blue bg:black)\
+$git_branch\
+$git_status\
+[](fg:black bg:background)\
+$cmd_duration\
+[](fg:background bg:background)\
+$time\
+[ ](fg:background)\
+\n$character"""
+
+palette = 'tokyonight'
+
+[cmd_duration]
+min_time = 2000
+format = ' [$duration](bold c2)'
+
+[username]
+show_always = true
+style_user = "bg:c12 fg:background"
+style_root = "bg:red fg:background"
+format = '[$user ]($style)'
+disabled = false
+
+[os]
+format = '[$symbol]($style)'
+style = "fg:black bg:c12"
+disabled = false
+
+[os.symbols]
+Arch = " "
+
+[directory]
+style = "fg:white bg:blue"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = " "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+"devel" = " "
+
+[git_branch]
+symbol = ""
+style = "bg:black"
+format = '[[ $symbol $branch ](fg:blue bg:black)]($style)'
+
+[git_status]
+style = "bg:black"
+format = '[[($all_status$ahead_behind )](fg:blue bg:black)]($style)'
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:background"
+format = '[[  $time ](fg:foreground bg:background)]($style)'
+
+[palettes.tokyonight]
+red = "#f7768e"
+c2 = "#ff9e64"
+yellow = "#e0af68"
+c4 = "#9ece6a"
+green = "#73daca"
+c6 = "#b4f9f8"
+c7 = "#2ac3de"
+cyan = "#7dcfff"
+blue = "#7aa2f7"
+magenta = "#bb9af7"
+white = "#c0caf5"
+foreground = "#a9b1d6"
+c12 = "#9aa5ce"
+c13 = "#cfc9c2"
+c14 = "#565f89"
+black = "#414868"
+background_storm = "#24283b" #storm
+background = "#1a1b26" #night
+
