@@ -8,3 +8,5 @@
 /config/zsh/.zcompdump
 
 !/scripts
+
+!/sync-config
