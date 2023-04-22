@@ -1,0 +1,57 @@
+
+* {
+    background-image: none;
+}
+
+window {
+    font-family: Noto Sans, monospace;
+    font-size: 14pt;
+    font-weight: bold;
+    text-shadow: unset;
+    color: #7aa2f7;
+    background-color: rgba(30, 30, 46, 0.5);
+}
+
+button {
+    background-color: rgba(36, 40, 59, 0.9);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30%;
+    border: none;
+    border-radius: 8px;
+    box-shadow: none;
+    color: #a9b1d6;
+    margin: 8px 8px;
+    transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+button:hover, button:focus {
+    background-color: rgba(122, 162, 247, 0.9);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    color: #414868;
+    text-shadow: rgba(0, 0, 0, 0.49) 0px 10px 20px, rgba(0, 0, 0, 0.53) 0px 6px 6px;
+}
+
+#lock {
+    background-image: image(url("./lock.svg"));
+}
+
+#logout {
+    background-image: image(url("./logout.svg"));
+}
+
+#suspend {
+    background-image: image(url("./suspend.svg"));
+}
+
+#shutdown {
+    background-image: image(url("./shutdown.svg"));
+}
+
+#reboot {
+    background-image: image(url("./reboot.svg"));
+}
+#hibernate {
+    background-image: image(url("./hibernate.svg"));
+}
+
