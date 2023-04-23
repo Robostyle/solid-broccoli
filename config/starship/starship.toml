@@ -34,6 +34,7 @@ disabled = false
 
 [os.symbols]
 Arch = " "
+Macos = " "
 
 [directory]
 style = "fg:white bg:blue"
