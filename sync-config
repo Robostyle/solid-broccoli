@@ -81,6 +81,7 @@ local git_folder="${0:a:h}"
 local git_config_folder="$git_folder/config"
 local git_bin_folder="$git_folder/scripts"
 local local_config_folder="$HOME/.config"
+local local_bin_folder="$HOME/.local/bin"
 
 
 if (( $#to_config )); then
@@ -154,7 +155,7 @@ if (( $#from_config )); then
 
     if (( $#binfiles )); then
         echo "syncing script files"
-        rsync -a "$HOME/.local/bin" "${git_bin_folder}"
+        rsync -a "${local_bin_folder}/" "${git_bin_folder}"
     fi
 fi
 
