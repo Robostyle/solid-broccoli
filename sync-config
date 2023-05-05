@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 local valid_configs=(
+    eww
     fuzzel
     hypr
     mako
@@ -53,26 +54,6 @@ function parse_options () {
     fi
 }
 
-function get_config_list () {
-    local parts=()
-    if [[ "$configs" == "all" ]]; then
-        echo syncing all: $valid_configs
-
-        parts=(${valid_configs})
-    else
-        parts=(${(@s:,:)configs[-1]})
-
-        for part in $parts; do
-            if [[ $valid_configs[(Ie)$part] -eq 0 ]]; then
-                echo "Config '$part' not found in valid configs!"
-                exit -1
-            fi
-        done
-    fi
-
-    echo "${parts}"
-}
-
 
 parse_options $*
 
@@ -83,11 +64,23 @@ local git_bin_folder="$git_folder/scripts"
 local local_config_folder="$HOME/.config"
 local local_bin_folder="$HOME/.local/bin"
 
+local parts=()
+if [[ "$configs" == "all" ]]; then
+    parts=(${valid_configs})
+else
+    parts=(${(@s:,:)configs[-1]})
+
+    for part in $parts; do
+        if [[ $valid_configs[(Ie)$part] -eq 0 ]]; then
+            echo "Config '$part' not found in valid configs!"
+            exit 1
+        fi
+    done
+fi
+
 
 if (( $#to_config )); then
     echo "Sync to ${local_config_folder}"
-
-    local parts=($(get_config_list))
 
     if [[ "$configs" == "all" ]]; then
         print -n "You selected to sync all configuration to .config,\n" \
@@ -98,19 +91,15 @@ if (( $#to_config )); then
 
             # mkdir -p ${date}
 
-            print "\nparts: ${parts}"
-
-        else
-            echo "No"
+            print "\nTODO"
+            exit 1
         fi
-    else
-        echo "syncing: ${parts}"
     fi
 
     for part in $parts; do
         echo "- syncing $part"
 
-        rsync -a --delete "${git_config_folder}/$part" "$HOME/.config"
+        rsync -a --delete "${git_config_folder}/$part" "${local_config_folder}"
 
         if [[ "$part" == "zsh" ]]; then
             # also sync .zshenv for zsh
@@ -120,32 +109,17 @@ if (( $#to_config )); then
 
     if (( $#binfiles )); then
         echo "syncing script files"
-        rsync -a "${git_bin_folder}" "$HOME/.local/bin" 
+        rsync -a "${git_bin_folder}/" "${local_bin_folder}" 
     fi
 fi
 
 if (( $#from_config )); then
     echo "Sync from ${local_config_folder}"
 
-    if [[ "$configs" == "all" ]]; then
-        echo syncing all: $valid_configs
-
-        parts=(${valid_configs})
-    else
-        parts=(${(@s:,:)configs[-1]})
-
-        for part in $parts; do
-            if [[ $valid_configs[(Ie)$part] -eq 0 ]]; then
-                echo "Config '$part' not found in valid configs!"
-                exit -1
-            fi
-        done
-    fi
-
     for part in $parts; do
         echo "- syncing $part"
 
-        rsync -a --delete "$HOME/.config/$part" "${git_config_folder}"
+        rsync -a --delete "${local_config_folder}/$part" "${git_config_folder}"
 
         if [[ "$part" == "zsh" ]]; then
             # also sync .zshenv for zsh
