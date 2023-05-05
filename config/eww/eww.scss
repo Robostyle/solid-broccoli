@@ -1,16 +1,17 @@
 @import 'scss/common';
 @import 'scss/mixins';
 
-.example {
-    padding: 1.3rem;
-    min-height: 2.2em;
+.bar {
+    padding: 0.3rem;
+    min-height: 2em;
     font-weight: bold;
     font-size: 1.1em;
+    border-bottom: $border_width solid $popover_border_color;
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.8);
 
     .button {
         .icon {
-            font-size: 1.2em;
+            font-size: 1.1em;
         }
 
         @include button($flat: true, $radii: $panel_button_radius);
@@ -30,16 +31,16 @@
             }
         }
     }
-}
 
-.left_modules {
-    background-color: $surface0;
-}
+    .left_modules {
+        background-color: $mantle;
+    }
 
-.center_modules {
-    background-color: $surface0;
-}
+    .center_modules {
+        background-color: $mantle;
+    }
 
-.right_modules {
-    background-color: $surface0;
+    .right_modules {
+        background-color: $mantle;
+    }
 }

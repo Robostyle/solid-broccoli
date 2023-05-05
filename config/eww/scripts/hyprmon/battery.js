@@ -1,4 +1,5 @@
-import { Gio, GObject, UPowerGlib } from './gtk.js'
+import { Battery, EnableFakeBattery } from './models/battery.js'
+import { Gio, GObject } from './gtk.js'
 
 const interfaceXML = `
 <node>
@@ -14,70 +15,10 @@ const interfaceXML = `
 
 const PowerManagerProxy = Gio.DBusProxy.makeProxyWrapper(interfaceXML)
 
-class Battery {
-    constructor(model) {
-        this._model = model || { IsPresent: false }
-    }
-
-    get isPresent() {
-        return this._model.IsPresent
-    }
-
-    get isCharging() {
-        return this._model.State === UPowerGlib.DeviceState.CHARGING
-    }
-
-    get isCharged() {
-        return (
-            this._model.State === UPowerGlib.DeviceState.FULLY_CHARGED ||
-            (this.isCharging && this.percentage >= 100)
-        )
-    }
-
-    get percentage() {
-        return this._model.Percentage
-    }
-
-    get timeLeft() {
-        if (this.isCharging)
-            return this._separateTimeLeft(this._model.TimeToFull)
-        return this._separateTimeLeft(this._model.TimeToEmpty)
-    }
-
-    get state() {
-        if (this.isCharged) return 'charged'
-        else if (this.isCharging) return 'charging'
-        else if (this.percentage < 30) return 'low'
-        return 'discharging'
-    }
-
-    get icon() {
-        const dicons = ['', '', '', '', '', '', '', '', '', '']
-        const cicons = ['󰢜', '󰂆', '󰂇', '󰂈', '󰢝', '󰂉', '󰢞', '󰂊', '󰂋', '󰂅']
-        const max_index = dicons.length
-
-        const index = Math.round(this.percentage / max_index) - 1
-        if (index < 0) index = 0
-        else if (index > 9) index = 9
-
-        if (this.isCharged) return '󰂄'
-        else if (this.isCharging) return cicons[index]
-        else if (this.percentage < 10) return '󱃍'
-
-        return dicons[index]
-    }
-
-    _separateTimeLeft(time) {
-        const totalMinutes = Math.floor(time / 60)
-
-        const seconds = time % 60
-        const hours = Math.floor(totalMinutes / 60)
-        const minutes = totalMinutes % 60
-
-        return { hours, minutes, seconds }
-    }
-}
-
+/**!brief Battery monitor.
+ *
+ * Monitors the DBus UPower for changes in battery state.
+ */
 export const BatteryMonitor = GObject.registerClass(
     {
         Signals: { sync: {} },
@@ -88,19 +29,25 @@ export const BatteryMonitor = GObject.registerClass(
 
             this._battery = new Battery()
 
-            this._proxy = new PowerManagerProxy(
-                Gio.DBus.system,
-                'org.freedesktop.UPower',
-                '/org/freedesktop/UPower/devices/DisplayDevice'
-            )
+            if (EnableFakeBattery) {
+                setInterval(() => this._sync(), 5000)
+            } else {
+                this._proxy = new PowerManagerProxy(
+                    Gio.DBus.system,
+                    'org.freedesktop.UPower',
+                    '/org/freedesktop/UPower/devices/DisplayDevice'
+                )
 
-            this._proxy.connect('g-properties-changed', () => {
-                try {
-                    this._sync(this._proxy)
-                } catch (e) {
-                    logError(e, 'Handling battery sync')
-                }
-            })
+                this._proxy.connect('g-properties-changed', (...other) => {
+                    print(other)
+                    try {
+                        this._battery = new Battery(this._proxy)
+                        this._sync()
+                    } catch (e) {
+                        logError(e, 'Handling battery sync')
+                    }
+                })
+            }
         }
 
         get json() {
@@ -119,8 +66,7 @@ export const BatteryMonitor = GObject.registerClass(
             }
         }
 
-        _sync(proxy) {
-            this._battery = new Battery(proxy)
+        _sync() {
             this.emit('sync')
         }
     }
