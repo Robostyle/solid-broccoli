@@ -8,45 +8,39 @@ end
 local font_name = "JetBrainsMono Nerd Font"
 
 return {
-  -- OpenGL for GPU acceleration, Software for CPU
-  front_end = "OpenGL",
+	-- OpenGL for GPU acceleration, Software for CPU
+	front_end = "OpenGL",
 
-  color_scheme = "tokyonight",
+	color_scheme = "Catppuccin Mocha",
 
-  font = font_with_fallback(font_name),
-  font_rules = {
-    {
-      italic = true,
-      font = font_with_fallback(font_name, { italic = true }),
-    },
-    {
-      italic = false,
-      font = font_with_fallback(font_name, { bold = true }),
-    },
-    {
-      intensity = "Bold",
-      font = font_with_fallback(font_name, { bold = true }),
-    },
-  },
+	font = font_with_fallback(font_name),
+	font_rules = {
+		{
+			italic = true,
+			font = font_with_fallback(font_name, { italic = true }),
+		},
+		{
+			italic = false,
+			font = font_with_fallback(font_name, { bold = true }),
+		},
+		{
+			intensity = "Bold",
+			font = font_with_fallback(font_name, { bold = true }),
+		},
+	},
 
-  warn_about_missing_glyphs = false,
-  font_size = 10,
-  -- line_height = 1.0,
-  -- dpi = 96.0,
+	warn_about_missing_glyphs = false,
+	font_size = 10,
+	default_cursor_style = "SteadyBar",
 
-  -- Cursor style
-  -- default_cursor_style = "BlinkingUnderline",
+	enable_wayland = true,
 
-  -- X11
-  enable_wayland = true,
-
-  -- Tab Bar
+	-- Tab Bar
 	enable_tab_bar = true,
 	hide_tab_bar_if_only_one_tab = true,
 
-  -- General
-  automatically_reload_config = true,
-  selection_word_boundary = " \t\n{[}]()\"'/:",
-  window_background_opacity = 0.85,
+	-- General
+	automatically_reload_config = true,
+	selection_word_boundary = " \t\n{[}]()\"'/:",
+	window_background_opacity = 0.85,
 }
-
