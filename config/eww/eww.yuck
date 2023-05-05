@@ -1,0 +1,86 @@
+(defvar     battery         "{}")
+
+(defwindow example
+  :monitor 0
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "100%"
+                      :height "40px"
+                      :anchor "top center")
+  :stacking "bg"
+  :exclusive true
+  (bar))
+
+(defwidget bar []
+  (centerbox :class "bar"
+    (left)
+    (center)
+    (right)))
+
+(defwidget left []
+	(box :orientation "h" 
+		   :space-evenly false  
+       :halign "start"
+		   :class "left_modules"
+    (label :text "left")))
+
+(defwidget center []
+  (box :orientation "h"
+       :space-evenly false
+       :halign "center"
+       :class "center_modules"
+    (label :text "center")))
+
+(defwidget right []
+  (box :orientation "h"
+       :space-evenly false
+       :halign "end"
+       :class "right_modules"
+    (box
+        :class "righBar"
+        :space-evenly false
+        :halign "end"
+      (panel_controls)
+      (panel_powermenu))))
+
+(defwidget controls_icon [control reveal value icon style visible] (eventbox
+    :visible visible
+    :onhover "${EWW_CMD} update ${control}_reveal=true"
+    :onhoverlost "${EWW_CMD} update ${control}_reveal=false"
+    (box
+        :space-evenly false
+        (revealer
+            :duration "300ms"
+            :reveal reveal
+            :class "reveal"
+            (label
+                :class "${style} ${control}"
+                :text value)
+        )
+        (label
+            :class "${style} ${control} icon"
+            :text icon)
+    )
+))
+
+(defwidget panel_powermenu [] 
+  (box :class "button-bin powermenu"
+    (button
+      :class "button powermenu"
+      :onclick "${EWW_CONFIG_DIR}/scripts/launcher toggle_menu powermenu"
+    (label :class "icon" :text ""))))
+
+(defvar battery_reveal false)
+(defwidget panel_controls [] (box
+    :class "controls"
+    :space-evenly false
+    (controls_icon
+        :transition "slideleft"
+        :control "battery"
+        :reveal false
+        :visible {battery.available}
+        :value {battery.percent}
+        :icon {battery.icon}
+        :style {battery.state})
+))
+

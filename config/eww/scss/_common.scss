@@ -1,0 +1,23 @@
+@import 'themes/_mocha';
+
+$radii: 13px;
+
+$hover: scale-color($text, 0.84);
+
+$border_width: 1px;
+$border_color: rgba(255, 255, 255, 0.002);
+$border: $border_width solid $border_color;
+
+$panel_button_radius: $radii * 0.8;
+$button_radius: $radii;
+
+$popover_radius: $radii * 1.8;
+$popover_border_color: rgba(255, 255, 255, 0.02);
+$popover_padding: 14px;
+
+* {
+    all: unset;
+    font-size: 14;
+    font-family: 'NotoSans Nerd Font';
+}
+$mono_font: 'JetBrainsMono Nerd Font';

@@ -1,0 +1,39 @@
+#!/usr/bin/gjs -m
+
+import { programArgs, programInvocationName } from 'system'
+import { App } from './app.js'
+import './gtk.js'
+
+function parseArgs(argv) {
+    let args = {}
+    for (let i = 1; i < argv.length; i++) {
+        switch (argv[i]) {
+            case '--help':
+                args.help = true
+                break
+            case '--backend':
+                args.backend = argv[++i]
+                break
+        }
+    }
+
+    return args
+}
+
+function main(argv) {
+    let { help, backend } = parseArgs(argv)
+    if (help) {
+        print('Usage:', argv[0], '[--backend <eww|stdout>]')
+        return
+    }
+
+    if (backend == null) {
+        // TODO: validate backend, pick stdout as default
+        backend = 'stdout'
+    }
+
+    print('Hello my first GNome thing with backend', backend)
+    new App({ backend })
+}
+
+main([programInvocationName, ...programArgs])

@@ -1,0 +1,45 @@
+@import 'scss/common';
+@import 'scss/mixins';
+
+.example {
+    padding: 1.3rem;
+    min-height: 2.2em;
+    font-weight: bold;
+    font-size: 1.1em;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.8);
+
+    .button {
+        .icon {
+            font-size: 1.2em;
+        }
+
+        @include button($flat: true, $radii: $panel_button_radius);
+
+        > * {
+            padding: 0 0.7em;
+        }
+
+        &.powermenu {
+            color: $red;
+        }
+
+        &.system-indicators {
+            @include system-indicators();
+            > * > * > * {
+                padding: 0 0.3em;
+            }
+        }
+    }
+}
+
+.left_modules {
+    background-color: $surface0;
+}
+
+.center_modules {
+    background-color: $surface0;
+}
+
+.right_modules {
+    background-color: $surface0;
+}
