@@ -40,11 +40,10 @@ zinit light-mode for \
   id-as'fzf/completion' https://github.com/junegunn/fzf/blob/master/shell/completion.zsh \
   id-as'fzf/key-bindings' https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
 
-zinit ice as"command" from"gh-r" extract bpick"exa-linux-x85_64-musl-*" pick"bin/exa"
-zinit light ogham/exa
-
 zinit ice wait'3' lucid
 zinit light agkozak/zsh-z
+
+zinit wait lucid light-mode for "lukechilds/zsh-nvm"
 
 # vim: ft=zsh ts=4 sw=4 expandtab
 
