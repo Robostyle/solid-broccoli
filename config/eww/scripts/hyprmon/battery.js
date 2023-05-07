@@ -38,8 +38,7 @@ export const BatteryMonitor = GObject.registerClass(
                     '/org/freedesktop/UPower/devices/DisplayDevice'
                 )
 
-                this._proxy.connect('g-properties-changed', (...other) => {
-                    print(other)
+                this._proxy.connect('g-properties-changed', () => {
                     try {
                         this._battery = new Battery(this._proxy)
                         this._sync()
