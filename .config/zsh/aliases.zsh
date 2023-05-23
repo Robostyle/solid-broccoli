@@ -50,6 +50,7 @@ alias yeet='yay -Rcs'
 # See: https://www.atlassian.com/git/tutorials/dotfiles
 #
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias lgconfig='/usr/bin/lazygit --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # vim:expandtab:ts=4:sw=4
 
