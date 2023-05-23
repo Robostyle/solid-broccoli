@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+VOLUME=$(pactl get-sink-volume @DEFAULT_SINK@ | grep Volume | awk '{print $5}' | tr % " ")
+
+if [[ $1 == 'mute_toggle' ]]; then mute_toggle; fi
+if [[ $1 == 'down' ]]; then lower; fi
+if [[ $1 == 'up' ]]; then raise; fi
+if [[ $1 == 'set' ]]; then set $2; fi
+if [[ $1 == 'get' ]]; then get; fi

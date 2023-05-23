@@ -9,6 +9,17 @@
     border-bottom: $border_width solid $popover_border_color;
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.8);
 
+    .button-bin {
+        margin: 3px 2px;
+        &.launcher {
+            margin-left: 4px;
+        }
+
+        &.powermenu {
+            margin-right: 4px;
+        }
+    }
+
     .button {
         .icon {
             font-size: 1.1em;
@@ -30,17 +41,50 @@
                 padding: 0 0.3em;
             }
         }
+
+        &.workspaces {
+            @include button($flat: false, $radii: $panel_button_radius);
+
+            .workspace-btn {
+                margin: 2px;
+
+                label {
+                    font-size: 1.2em;
+                }
+
+                &.empty {
+                    color: transparentize($text, 0.34);
+                }
+
+                &.occupied {
+                    color: transparentize($text, 0.18);
+                }
+
+                &.active {
+                    color: $text;
+                }
+
+                &:hover {
+                    &.empty {
+                        color: transparentize($text, 0.18);
+                    }
+
+                    &.occupied {
+                        color: $text;
+                    }
+
+                    &:active {
+                        color: $blue;
+                    }
+                }
+            }
+        }
     }
 
-    .left_modules {
-        background-color: $mantle;
-    }
-
-    .center_modules {
-        background-color: $mantle;
-    }
-
+    .left_modules,
+    .center_modules,
     .right_modules {
+        border-radius: $button_radius;
         background-color: $mantle;
     }
 }

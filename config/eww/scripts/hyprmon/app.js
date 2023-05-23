@@ -33,6 +33,7 @@ export const App = GObject.registerClass(
         }
 
         _output(json, name) {
+            print(`eww update ${name}='${JSON.stringify(json)}'`)
             let [success, _1, err, _2] = GLib.spawn_command_line_sync(
                 `eww update ${name}='${JSON.stringify(json)}'`
             )

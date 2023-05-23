@@ -48,9 +48,7 @@ export const HyprlandMonitor = GObject.registerClass(
             this._activeWindow = this._getActiveWindow()
             this._monitors = this._getMonitors()
             this._workspaces = this._getWorkspaces()
-
             this._activeWorkspace = this._activeWindow.workspace.id
-            print(`active ws: ${this._activeWorkspace}`)
 
             const hypr_instance = GLib.getenv('HYPRLAND_INSTANCE_SIGNATURE')
             const client = new Gio.SocketClient()
@@ -70,7 +68,7 @@ export const HyprlandMonitor = GObject.registerClass(
             }
 
             this._debouncedSync = debounce((arg) => {
-                print(arg)
+                log(arg)
                 this._sync()
             }, 100)
 
@@ -78,32 +76,6 @@ export const HyprlandMonitor = GObject.registerClass(
         }
 
         get json() {
-            const result = {
-                monitors: this._monitors.sort((lhs, rhs) => lhs.id > rhs.id),
-                activeWindow: this._activeWindow,
-            }
-            for (const monitor of result.monitors) {
-                monitor.workspaces = this._workspaces
-                    .filter((ws) => ws.monitor === monitor.name)
-                    .map((ws) => ({
-                        id: ws.id,
-                        name: ws.name,
-                        windows: ws.windows,
-                    }))
-                    .sort((lhs, rhs) => lhs.id > rhs.id)
-            }
-
-            print(`result: ${JSON.stringify(result)}`)
-
-            return result
-
-            return {
-                active: this._activeWorkspace,
-                activeWindow: this._activeWindow,
-                monitors: this._monitors,
-                workspaces: this._workspaces,
-            }
-
             /**
              * {
              *  monitors: {
@@ -119,15 +91,31 @@ export const HyprlandMonitor = GObject.registerClass(
              *          id: number
              *          name: string
              *          windows: number
-             *      }
-             *      ]
+             *      }]
              *      focused: boolean
              *  },
+             *  active: number
              *  activeWindow: string
              * }
-             *
-             *
              */
+            const result = {
+                monitors: this._monitors.sort((lhs, rhs) => lhs.id > rhs.id),
+                active: this._activeWorkspace,
+                activeWindow: this._activeWindow,
+            }
+
+            for (const monitor of result.monitors) {
+                monitor.workspaces = this._workspaces
+                    .filter((ws) => ws.monitor === monitor.name)
+                    .map((ws) => ({
+                        id: ws.id,
+                        name: ws.name,
+                        windows: ws.windows,
+                    }))
+                    .sort((lhs, rhs) => lhs.id > rhs.id)
+            }
+
+            return result
         }
 
         async _readLoop(stream) {
@@ -137,8 +125,6 @@ export const HyprlandMonitor = GObject.registerClass(
                 while ((line = await readLineAsync(stream)) !== null) {
                     const regex = /^([a-z0-9]+)>>(.+)/
                     const [_, token, argument] = line.match(regex)
-
-                    log(`trying to handle ${token}: ${argument}`)
                     switch (token) {
                         case 'workspace':
                             this._activeWorkspace = argument

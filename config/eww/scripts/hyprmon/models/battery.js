@@ -1,6 +1,6 @@
 import { UPowerGlib } from '../gtk.js'
 
-export const EnableFakeBattery = true
+export const EnableFakeBattery = false
 
 /**!brief Encapsulates battery info
  *

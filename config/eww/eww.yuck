@@ -4,7 +4,7 @@
 (defvar     battery         '{"available": false}')
 
 (defwindow example
-  :monitor 0
+  :monitor 1
   :stacking 'fg'
   :exclusive true
   :geometry (geometry :width '100%'
@@ -16,14 +16,13 @@
       :class 'left_modules'
       :space-evenly false
       :halign 'start'
-      (panel_monitors)
-      ; (panel_workspaces)
+      (panel_workspaces)
     )
     (box
       :class 'center_modules'
       :space-evenly false
       :halign 'center'
-      ; (panel_title)
+      (panel_title)
     ) 
     (box
       :class 'right_modules'
@@ -97,17 +96,16 @@
 ))
 
 (defvar battery_reveal false)
+
 (defwidget panel_controls [] (box
     :class 'controls'
     :space-evenly false
-    (controls_icon
-        :transition 'slideleft'
-        :control 'battery'
-        :reveal false
-        :visible {battery.available}
-        :value {battery.percent}
-        :icon {battery.icon}
-        :style {battery.state})
+    (box
+      (label :class "volume icon" :text "󰕾")
+    )
+    (box :visible {battery.available}
+      (label :class 'battery icon' :text {battery.icon} :style {battery.state})
+    )
 ))
 
 (defwidget panel_title [] (box
@@ -116,41 +114,23 @@
   (label :text "${workspaces.activeWindow.title}")
 ))
 
-(defwidget panel_workspaces [] (box :class 'button-bin'
-    ; (for workspace in {workspaces.workspaces}
-      (button
-        ; :class 'workspace-btn ${workspace.id == workspaces.active ? 'active' : ''}}'
-        ; :onclick 'hyprctl dispatch workspace ${workspace.id}'
-        ; (label :class 'icon' :text {workspace.windows > 0 ? '${workspace.id == workspaces.active ? '' : ''}' : ''})
-      ; )
-  )
-))
-
-; (defwidget panel_workspaces_old [] (box :class 'button-bin'
-;     (eventbox :class 'button workspaces'
-;         (box
-;             :space-evenly false
-;             (for workspace in {workspaces.workspaces}
-;                 (button
-;                     :class 'workspace-btn ${workspace.id == workspaces.active ? 'active' : ''} ${workspace.windows > 0 ? 'occupied' : 'empty'}'
-;                     :onclick 'hyprctl dispatch workspace ${workspace.id}'
-;                     :valign 'center'
-;                     (label :class 'icon' :text {workspace.windows > 0 ? '${workspace.id == workspaces.active ? '' : ''}' : ''})
-;                 )
-;             )
-;         )
-;     )
-; ))
-;
-
-(defwidget panel_monitors [] (box
-  (label :text 'monitors:')
-  (for monitor in {workspaces.monitors}
-    (box
-      (label :text '${monitor.name}')
-      (for ws in {monitor.workspaces}
-        (label :text '${ws.id}' :tooltip '${monitor.name}')
-      ))
-  )
+(defwidget panel_workspaces [] (box :class 'monitors' :space-evenly false
+    (for monitor in {workspaces.monitors}
+        (box :class 'button-bin'
+            (eventbox :class 'button workspaces'
+                (box :space-evenly false
+                    (label :text '${monitor.name}: ')
+                    (for workspace in {monitor.workspaces}
+                        (button
+                            :class 'workspace-btn ${workspace.id == workspaces.active ? 'active' : ''} ${workspace.windows > 0 ? 'occupied' : 'empty'}'
+                            :onclick 'hyprctl dispatch workspace ${workspace.id}'
+                            :valign 'center'
+                            (label :class 'icon' :text {workspace.windows > 0 ? '${workspace.id == workspaces.active ? '' : ''}' : ''})
+                        )
+                    )
+                )
+            )
+        )
+    )
 ))
 
