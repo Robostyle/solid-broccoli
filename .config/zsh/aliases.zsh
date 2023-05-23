@@ -43,6 +43,13 @@ alias sudo='sudo '
 alias yeet='yay -Rcs'
 
 # alias run_diamond="sudo modprobe dummy && sudo ip link add bond0 type dummy && sudo ifconfig bond0 hw ether 10:22:33:44:55:66"
+#
+
+# Manage the dotfiles with a git bare repository and work-tree
+#
+# See: https://www.atlassian.com/git/tutorials/dotfiles
+#
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # vim:expandtab:ts=4:sw=4
 
