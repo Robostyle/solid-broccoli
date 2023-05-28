@@ -12,28 +12,6 @@ function _smooth_fzf() {
 }
 
 
-# Runs docker in my work space with given image
-function run_docker() {
-    if [ $# -lt 1 ]; then
-        echo "Not enough arguments, usage: run_docker [options] <image>[:<tag>]"
-    else
-        dcmd="docker run -ti --rm -v $HOME/work:/workspaces -w /workspaces $@"
-        echo ${dcmd}
-        eval ${dcmd}
-    fi
-}
-
-
-# Performs a bmap copy to a mounted UMS disk.
-function bmapcopy() {
-    if [ $# -lt 1 ]; then
-        echo "No argument given, need a filename to a .wic file"
-    else
-        bmaptool copy $1 /dev/disk/by-id/$(ls /dev/disk/by-id | grep -E '^usb-Linux_UMS_disk_0_[0-9a-z]{,18}-0:0$')
-    fi
-}
-
-
 # launches gstreamer connecting to a RTSP stream.
 # arg1 ip address
 # arg2 (optional) different media url
