@@ -1,10 +1,16 @@
-.dotfiles
-.cache/
-.cargo
-.docker/
-.local/share/
-.local/state/
-.npm/
-.Trash/
-.vscode/
-.yarn/
+# Ignore everything
+/*
+
+# But not these files...
+!.gitignore
+!.zshenv
+
+# Ignore all files named .DS_Store or ending with .log
+**/.DS_Store
+**.log
+
+!/.config
+!/.config/**
+
+/.config/yarn
+/.config/*.old
