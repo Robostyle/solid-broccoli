@@ -1,1 +1,9 @@
 .dotfiles
+.cache/
+.docker/
+.local/share/
+.local/state/
+.npm/
+.Trash/
+.vscode/
+.yarn/
