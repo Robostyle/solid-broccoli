@@ -19,11 +19,12 @@ function bmapcopy() {
     fi
 }
 
+
 function sqrfw_upload() {
     if [ $# -lt 1 ]; then
         echo "Need an IP address, usage: sqrfw_upload <ip-address> [firmware-file]"
     else
-        local firmware_basepath="/$HOME/work/codec_firmware_root/build/tmp/deploy/images/ithaca"
+        local firmware_basepath="/$HOME/work/codec_firmware_root/build-ithaca/tmp/deploy/images/ithaca"
         local firmware_file="image=@${firmware_basepath}/ithaca-image-ithaca_norules.sqrfw"
         local ip_address="$1"
 
@@ -33,7 +34,7 @@ function sqrfw_upload() {
 
         echo "Uploading firmware '${firmware_file}'"
 
-        curl http://${ip_address}/firmware/upgrade.cgi?response=json -v -F ${firmware_file}
+        curl http://${ip_address}/firmware/upgrade.cgi?response=json -v -F ${firmware_file} --digest -u 'Admin:Admin1234'
     fi
 
 

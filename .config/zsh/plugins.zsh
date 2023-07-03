@@ -45,5 +45,11 @@ zinit light agkozak/zsh-z
 
 zinit wait lucid light-mode for "lukechilds/zsh-nvm"
 
+# tmux {{{
+zstyle ':prezto:module:tmux:session' name '0'
+zinit ice svn; zinit snippet PZT::modules/tmux
+zinit ice lucid wait'!0a' as'null' id-as'tpm' atclone'mkdir -p $HOME/.tmux/plugins; ln -sf $ZINIT[PLUGINS_DIR]/tpm $HOME/.tmux/plugins/tpm' ; zinit light tmux-plugins/tpm
+# }}}
+
 # vim: ft=zsh ts=4 sw=4 expandtab
 
