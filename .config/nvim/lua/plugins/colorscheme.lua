@@ -5,8 +5,8 @@ return {
     name = "catppuccin",
 
     opts = {
-      flavour = "latte",
-      -- transparent_background = true,
+      transparent_background = true,
+      flavour = "frappe",
     },
   },
 
