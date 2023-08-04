@@ -56,5 +56,11 @@ export LS_COLORS='*.7z=38;5;40:*.WARC=38;5;40:*.a=38;5;40:*.arj=38;5;40:*.bz2=38
 export NVM_COMPLETION=true
 export NVM_SYMLINK_CURRENT="true"
 
+
+# load homebrew when on OSX
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # vim: ft=zsh ts=4 sw=4 expandtab nowrap
 
