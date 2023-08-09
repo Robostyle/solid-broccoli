@@ -40,4 +40,13 @@ function sqrfw_upload() {
 
 }
 
-
+function sqrfw_upload_ssh_key() {
+    if [ $# -lt 1 ]; then
+        echo "Need an IP address, usage: sqrfw_upload <ip-address> [firmware-file]"
+    else
+        local ip_address="$1"
+        local payload="{ \"key\": \"$(cat $HOME/.ssh/id_ed25519.pub)\", \"label\": \"my key\" }"
+        echo ${payload} \
+            | curl -u'Admin' --digest -X POST --insecure https://${ip_address}/api/ssh-keys -H "Content-Type: application/json" --data-binary @-
+    fi
+}
