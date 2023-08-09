@@ -2,9 +2,9 @@ ignore-empty-password
 show-failed-attempts
 font=Ubuntu
 
-#grace=5
-grace-no-mouse
-grace-no-touch
+grace=5
+# grace-no-mouse
+# grace-no-touch
 
 screenshots
 effect-greyscale
