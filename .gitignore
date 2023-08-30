@@ -1,5 +1,5 @@
 # Ignore everything
-/*
+/**
 
 # But not these files...
 !.gitignore
@@ -9,8 +9,16 @@
 **/.DS_Store
 **.log
 
-!/.config
-!/.config/**
+!.config/
+!.config/*
+!.config/nvim/
+!.config/nvim/*
+!.config/nvim/lua/
+!.config/nvim/lua/*
+!.config/nvim/lua/config/
+!.config/nvim/lua/config/*
+!.config/nvim/lua/plugins/
+!.config/nvim/lua/plugins/*
 
-/.config/yarn
-/.config/*.old
+.config/yarn
+.config/*.old
