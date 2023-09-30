@@ -1,168 +1,281 @@
-@define-color bg-color #1f2335;
-@define-color bg-color-storm #24283b;
-@define-color police-blue #414868;
-@define-color ucla-blue #565f89;
-@define-color pastel-gray #cfc9c2;
-@define-color blue-bell #9aa5ce;
-@define-color wild-blue-yonder #a9b1d6;
-@define-color vodka #c0caf5;
-@define-color pale-violet #bb9af7;
-@define-color french-sky-blue #7aa2f7;
-@define-color light-sky-blue #7dcfff;
-@define-color battery-charged-blue #2ac3de;
-@define-color celeste #b4f9f8;
-@define-color pearl-aqua #73daca;
-@define-color pistachio #9ece6a;
-@define-color fawn #e0af68;
-@define-color atomic-tangerine #ff9e64;
-@define-color light-crimson #f7768e;
+@import "theme/mocha.css";
 
 * {
-    font-family: Hack, monospace;
-    font-size: 14px;
+  font-family: JetBrainsMonoNL Nerd Font, sans-serif;
+  font-size: 14px;
+}
+
+window.eDP-1 * {
+  font-size: 12px;
 }
 
 window#waybar {
-    background: rgba(0, 0, 0, 0);
-    color: @vodka;
+  background-color: alpha(@base, 0.2);
+  color: @text;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+button {
+  background-color: transparent;
+
+  /* Use box-shadow instead of border so the text isn't offset */
+  box-shadow: inset 0 -3px transparent;
+  /* Avoid rounded borders under each button name */
+  border: none;
+  border-radius: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+  background: inherit;
+  box-shadow: inset 0 -3px @mauve;
+}
+
+#workspaces {
+  background-color: alpha(@mantle, 0.55);
+  padding: 0 10px;
+  border-radius: 12px;
 }
 
 #workspaces button {
-    padding: 5px;
-    color: @police-blue;
-    margin-right: 5px;
-}
-
-#workspaces button.active {
-    color: @blue-bell;
-}
-
-#workspaces button.focused {
-    color: @wild-blue-yonder;
-    background: @fawn;
-    border-radius: 10px;
-}
-
-#workspaces button.urgent {
-    color: @bg-color;
-    background: @pistachio;
-    border-radius: 10px;
+  padding: 0 0.25em;
+  color: @lavender;
+  margin: 0.25em;
 }
 
 #workspaces button:hover {
-    background: @police-blue;
-    color: @vodka;
-    border-radius: 10px;
+  background-color: alpha(@surface0, 0.8);
 }
 
-tooltip * {
-  font-size: 8px;
+#workspaces button.focused {
+  background-color: @sky;
+  box-shadow: inset 0 -3px @sky;
 }
 
-#backlight,
-#battery,
+#workspaces button.urgent {
+  background-color: #eb4d4b;
+}
+
+#workspaces button.active {
+  color: @mauve;
+  font-weight: bolder;
+}
+
+#mode {
+}
+
 #clock,
+#battery,
+#backlight,
+#bluetooth,
 #cpu,
-#custom-updates,
-#custom-quit,
-#idle_inhibitor,
 #memory,
+#disk,
+#temperature,
 #network,
-#pulseaudio,
-#tray,
+#network.ppp0,
+#network.wlp0s20f3,
+#wireplumber,
+#custom-quit,
+#custom-pacman,
+#custom-power-profile {
+  background-color: alpha(@mantle, 0.55);
+  padding: 0 10px;
+}
+
 #window,
 #workspaces {
-    background: @bg-color;
-    padding: 0px 10px;
-    margin: 3px 0px;
-    margin-top: 5px;
-}
-
-#tray {
-    border-radius: 10px;
-    margin-right: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-#workspaces {
-    background: @bg-color;
-    border-radius: 10px;
-    margin-left: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+  margin: 0 2px;
 }
 
 #window {
-    border-radius: 10px;
-    margin-left: 60px;
-    margin-right: 60px;
+  background-color: transparent;
+  color: darker(@blue);
+  font-weight: bold;
+  padding: 0 10px;
+  text-shadow: 0px 3px 3px alpha(@surface1, 0.5);
+  font-size: 1.01rem;
 }
 
-#idle_inhibitor {
-    margin-left: 5px;
-    border-radius: 10px 0px 0px 10px;
-    border-right: 0px;
-    padding: 0 15px;
-    padding-right: 10px;
-    font-size: 24px;
-}
-#idle_inhibitor.activated {
-    color: @fawn;
-}
-#idle_inhibitor.deactivated {
-    color: @blue-bell;
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+  margin-left: 0;
 }
 
-#memory {
-    border-right: 0px;
-    border-radius: 0px 10px 10px 0px;
-    border-right: 0px;
-    padding-right: 15px;
-}
-
-#memory.warning {
-    color: @atomic-tangerine;
-}
-
-#memory.critical {
-    color: @light-crimson;
-}
-
-#network {
-    color: @french-sky-blue;
-}
-
-#custom-updates {
-    color: @pearl-aqua;
-    border-right: 0px;
-    border-radius: 10px 0px 0px 10px;;
-    padding-left: 15px;
-}
-
-#pulseaudio {
-    color: @light-sky-blue;
-}
-
-#pulseaudio.microphone {
-    color: @pale-violet;
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+  margin-right: 0;
 }
 
 #clock {
-    color: @fawn;
+  background-color: alpha(@lavender, 0.7);
+  color: @crust;
 }
 
 #battery {
-    color: @pistachio;
-    border-radius: 0 10px 10px 0;
-    margin-right: 10px;
+}
+
+#battery.charging,
+#battery.plugged {
+}
+
+@keyframes blink {
+  to {
+    background-color: @text;
+    color: #000000;
+  }
+}
+
+#battery.critical:not(.charging) {
+  background-color: #f53c3c;
+  color: @text;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+label:focus {
+  background-color: @crust;
+}
+
+#cpu {
+}
+
+#memory {
+}
+
+#disk {
+}
+
+#backlight {
+}
+
+label#network.ppp0 {
+  font-weight: bolder;
+  background-color: alpha(darker(@maroon), 0.75);
+}
+
+label#network.ppp0.disconnected {
+  background-color: alpha(@mantle, 0.55);
+  color: @overlay2;
+  font-weight: bolder;
+}
+
+#wireplumber {
+}
+
+#wireplumber.muted {
+  color: @red;
+  font-weight: bolder;
+}
+
+#temperature {
+}
+
+#temperature.critical {
+  color: @red;
+}
+
+#tray {
+  background-color: #2980b9;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+}
+
+#idle_inhibitor {
+}
+
+#idle_inhibitor.activated {
+}
+
+#scratchpad {
+}
+
+#scratchpad.empty {
+}
+
+@keyframes blink-update {
+  to {
+    background-color: darker(@sky);
+  }
 }
 
 #custom-quit {
-    border-radius: 0 10px 10px 0;
-    color: @light-crimson;
-    font-size: 24px;
-    margin-right: 5px;
-    padding-right: 15px;
+  color: @red;
+  border-radius: 12px;
 }
 
+#custom-pacman {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+#custom-pacman.pending-updates {
+  animation-name: blink-update;
+  animation-duration: 3s;
+}
+
+#custom-power-profile {
+  font-size: 1.3em;
+}
+#custom-power-profile.low-power {
+  color: @blue;
+}
+#custom-power-profile.balanced {
+  color: @yellow;
+}
+#custom-power-profile.performance {
+  color: @red;
+}
+
+.modules-right > widget:last-child > label {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  font-size: 1.15em;
+}
+.modules-right > widget:first-child > label {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.modules-right > widget:nth-child(1) > label {
+  background-color: @flamingo;
+  color: @flamingo;
+}
+.modules-right > widget:nth-child(2) > label {
+  color: @pink;
+}
+.modules-right > widget:nth-child(3) > label {
+  color: @mauve;
+}
+.modules-right > widget:nth-child(4) > label {
+  color: @maroon;
+}
+.modules-right > widget:nth-child(5) > label {
+  color: @peach;
+}
+.modules-right > widget:nth-child(6) > label {
+  color: @yellow;
+}
+.modules-right > widget:nth-child(7) > label {
+  color: @green;
+}
+.modules-right > widget:nth-child(8) > label {
+  color: @teal;
+}
+.modules-right > widget:nth-child(9) > label {
+  color: @sky;
+}
