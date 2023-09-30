@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Monitors the given path on a Lenovo X1 for power profile
+#
+# requires: inotifywatch (extra/inotify-tools)
+#
+
+acpi_path="/sys/firmware/acpi/platform_profile"
+
+function json() {
+	jq --unbuffered --null-input --compact-output \
+		--arg text "$1" \
+		--arg alt "$2" \
+		--arg tooltip "$3" \
+		--arg class "$4" \
+		'{"text": $text, "alt": $alt, "tooltip": $tooltip, "class": $class}'
+}
+
+function update_profile() {
+	local profile=$(cat ${acpi_path})
+	local profile_text=""
+
+	case ${profile} in
+	"low-power")
+		profile_text="low power"
+		;;
+	"balanced")
+		profile_text="balanced"
+		;;
+	"performance")
+		profile_text="performance"
+		;;
+	esac
+
+	if [ ! -z "${profile_text}" ]; then
+		if [ "$1" = "notify" ]; then
+			notify-send -u normal -i software-update-available-symbolic \
+				"Switch to '${profile_text}' profile"
+		fi
+
+		json "" "${profile}" "${profile_text}" "${profile}"
+	fi
+}
+
+function cleanup() {
+	exit 0
+}
+
+trap cleanup SIGINT SIGTERM
+
+# Update on startup
+update_profile
+
+while inotifywait -qq --event modify ${acpi_path}; do
+	update_profile notify
+done

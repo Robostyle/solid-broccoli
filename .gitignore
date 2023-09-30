@@ -9,6 +9,11 @@
 **/.DS_Store
 **.log
 
+!.local/
+!.local/*
+!.local/bin/
+!.local/bin/*
+
 !.config/
 !.config/*
 !.config/nvim/
