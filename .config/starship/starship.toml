@@ -36,6 +36,7 @@ disabled = false
 Arch = " "
 Macos = " "
 Manjaro = " "
+Ubuntu = " "
 
 [directory]
 style = "fg:surface2 bg:blue"
