@@ -19,6 +19,6 @@ return {
   },
 
   keys = {
-    { "<leader>gn", [[<Cmd>lua require"neogit".open({ kind = "auto", cwd = "%:p:h" })<CR>]], desc = "Neogit" },
+    { "<leader>gn", [[<Cmd>lua require"neogit".open({ kind = "auto" })<CR>]], desc = "Neogit" },
   },
 }
