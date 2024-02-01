@@ -16,6 +16,10 @@
 
 !.config/
 !.config/*
+!.config/alacritty/
+!.config/alacritty/*
+!.config/alacritty/catppuccin/
+!.config/alacritty/catppuccin/*
 !.config/nvim/
 !.config/nvim/*
 !.config/nvim/lua/
