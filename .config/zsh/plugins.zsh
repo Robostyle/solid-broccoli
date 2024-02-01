@@ -28,6 +28,7 @@ zinit light-mode for \
     zsh-users/zsh-autosuggestions \
     Aloxaf/fzf-tab
 
+zinit snippet OMZ::plugins/git/git.plugin.zsh
 zinit ice wait'3' lucid
 zinit light zsh-users/zsh-history-substring-search
 
